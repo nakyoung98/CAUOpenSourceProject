@@ -4,11 +4,13 @@ import random
 from constant import HEIGHT, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
 
 
+#! Class use to handle Apple behavior
 class Apple:
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
+    #? Allow to make respawn a new apple
     def respawn(self, state):
         xApple, yApple = -1, -1
         for c in range(0, 8):
@@ -31,11 +33,16 @@ class Apple:
         self.y = yApple
 
 
+#! Class use to handle Player behavior
 class Player:
+    #!Class Constructor
+    #! Size is the snacke lenght (use to calculate the score)
+    #! State is a list contain the snake's part (exemple: [{'x': 19, 'y': 19, 'look': 'up'}, {'x': 19, 'y': 18, 'look': 'left'}])
     def __init__(self, size, state):
         self.size = size
         self.state = state
 
+    #! move forward
     def move(self):
         save = self.state[0]['look']
         for i in range(len(self.state)):
@@ -52,6 +59,7 @@ class Player:
                 self.state[i]['look'] = save
                 save = tmp
 
+    #! Change The direction of the Snacke
     def changeOrientation(self, newOrientation):
         if (newOrientation == 'up' and self.state[0]['look'] != 'down'):
             self.state[0]['look'] = 'up'
@@ -62,12 +70,14 @@ class Player:
         if (newOrientation == 'right' and self.state[0]['look'] != 'left'):
             self.state[0]['look'] = 'right'
 
-    def eat(self, apple, lastX, lastY, lastLook):
+    #! Check If the Snacke Head can eat the Apple
+    def CheckEatApple(self, apple, lastX, lastY, lastLook):
         if apple.x == self.state[0]['x'] and apple.y == self.state[0]['y']:
             apple.respawn(self.state)
             self.state.append({'x': lastX, 'y': lastY, 'look': lastLook})
             self.size += 1
 
+    #! Check If the Snacke is alive (return True) or Dead (return False)
     def isAlive(self):
         if self.state[0]['x'] < 0 or self.state[0]['y'] < 0 or self.state[0]['x'] > 39 or self.state[0]['y'] > 39:
             return False
@@ -78,6 +88,7 @@ class Player:
         return True
 
 
+#! Handle All Display part (and a little more)
 def displayGame(pygame, screen, player, apple):
     lastX, lastY, lastLook = player.state[len(player.state) - 1]['x'], player.state[len(
         player.state) - 1]['y'], player.state[len(player.state) - 1]['look']
@@ -91,24 +102,29 @@ def displayGame(pygame, screen, player, apple):
         z = pygame.transform.rotate(z, Orientation[player.state[i]['look']])
         screen.blit(
             z, (player.state[i]['x']*MODULO_SCREEN, player.state[i]['y']*MODULO_SCREEN))
-    player.eat(apple, lastX, lastY, lastLook)
+    player.CheckEatApple(apple, lastX, lastY, lastLook)
     a = pygame.image.load("textures/Apple.png")
     screen.blit(a, (apple.x*MODULO_SCREEN, apple.y*MODULO_SCREEN))
     pygame.display.update()
     pass
 
 
+#! GamePlay function is use to handle the snacke game
+#! pygame => lib
+#! screen => pygame window
+#! loadSave => String Path to a saveFile (default value '')
 def gameplay(pygame, screen, loadSave):
     clock = pygame.time.Clock()
-    size = 1
-    xApple, yApple = random.randint(0, 39), random.randint(0, 39)
-    state = [{'x': 19, 'y': 19, 'look': 'up'}]
-    # ! Paul c'est ici que tu call ta fonction pour charger une save
+    size = 1 #default Value
+    xApple, yApple = random.randint(0, 39), random.randint(0, 39) #default Value
+    state = [{'x': 19, 'y': 19, 'look': 'up'}] #default Value
+    #! Paul: c'est ici que tu call ta fonction pour charger une save, elle prends le path vers le fichier de save
     # size, state, xApple, yApple = loadingGame(loadSave)
     #################
     loadSave = loadSave  # useless
     #################
 
+    # Create Resource
     player = Player(size, state)
     apple = Apple(xApple, yApple)
     bg = pygame.image.load("textures/GameBackground.jpg")
@@ -132,4 +148,11 @@ def gameplay(pygame, screen, loadSave):
                 if event.key == pygame.K_RIGHT:
                     player.changeOrientation('right')
         displayGame(pygame, screen, player, apple)
+        #! Tim: You can handle the in-game menu HERE
+        #  To make a save, we need to have is variable:
+        #    - "score": player.size
+        #    - "state": player.state
+        #    - "Apple x position": apple.x
+        #    - "Apple y position": apple.y
+        # InGameMenu(????)
     return player.size
