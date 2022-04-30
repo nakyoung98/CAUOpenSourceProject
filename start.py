@@ -23,4 +23,4 @@ while True:
             pygame.display.quit()
             pygame.quit()
             sys.exit()
-    gameplay(pygame, screen, 'FileNameOfTheLoadSave')
+    gameplay(pygame, screen)

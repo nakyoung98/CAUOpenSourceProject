@@ -2,6 +2,7 @@ import sys
 import random
 
 from constant import HEIGHT, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
+from save import Score, addNewScore, loadingGame, saveGame
 
 
 #! Class use to handle Apple behavior
@@ -113,16 +114,26 @@ def displayGame(pygame, screen, player, apple):
 #! pygame => lib
 #! screen => pygame window
 #! loadSave => String Path to a saveFile (default value '')
-def gameplay(pygame, screen, loadSave):
+def gameplay(pygame, screen):
     clock = pygame.time.Clock()
     size = 1 #default Value
     xApple, yApple = random.randint(0, 39), random.randint(0, 39) #default Value
     state = [{'x': 19, 'y': 19, 'look': 'up'}] #default Value
-    #! Paul: c'est ici que tu call ta fonction pour charger une save, elle prends le path vers le fichier de save
-    # size, state, xApple, yApple = loadingGame(loadSave)
-    #################
-    loadSave = loadSave  # useless
-    #################
+
+    #####    Call this if you want to load the game     #####
+    #size, state, xApple, yApple = loadingGame()
+
+    #####    Call this if you want to save the game     #####
+    #saveGame(player.size, player.state, apple.x, apple.y)
+
+    #####    Call this to save the score,               #####
+    #####    the save decide if score is high enough    #####
+    #####    to save or not                             #####
+    #addNewScore(Score("Paul", player.size))
+
+    #####    Used to get the list of high scores        #####
+    #####    scores is type of Scores class             #####
+    #scores = getBestScores()
 
     # Create Resource
     player = Player(size, state)
