@@ -120,6 +120,35 @@ def gameplay(pygame, screen, ingame):
     size = 1 #default Value
     xApple, yApple = random.randint(0, 39), random.randint(0, 39) #default Value
     state = [{'x': 19, 'y': 19, 'look': 'up'}] #default Value
+    startMenu = True
+    
+    # Create Resource
+    player = Player(size, state)
+    apple = Apple(xApple, yApple)
+    menu = Menu(pygame, screen, score=player.size)
+    
+    bg = pygame.image.load("textures/GameBackground.jpg")
+    bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
+
+    while startMenu:
+        screen.blit(bg, (0, 0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.display.quit()
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.key.get_pressed():
+                if event.key == pygame.K_l:
+                    size, state, xApple, yApple = loadingGame()
+                    apple = Apple(xApple, yApple)
+                    startMenu = False
+                if event.key == pygame.K_q:
+                    pygame.display.quit()
+                    pygame.quit()
+                    sys.exit()
+                if event.key == pygame.K_SPACE:
+                    startMenu = False  
+        menu.displayStartMenu()
 
     #####    Call this if you want to load the game     #####
     #size, state, xApple, yApple = loadingGame()
@@ -134,17 +163,7 @@ def gameplay(pygame, screen, ingame):
 
     #####    Used to get the list of high scores        #####
     #####    scores is type of Scores class             #####
-    #scores = getBestScores()
-
-    # Create Resource
-    player = Player(size, state)
-    apple = Apple(xApple, yApple)
-    menu = Menu(pygame, screen, player)
-
-    bg = pygame.image.load("textures/GameBackground.jpg")
-    bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
-
-    menu.start()
+    #scores = getBestScores()    
 
     while player.isAlive():
         clock.tick(GAMETICK)
@@ -163,9 +182,6 @@ def gameplay(pygame, screen, ingame):
                     player.changeOrientation('up')
                 if event.key == pygame.K_RIGHT:
                     player.changeOrientation('right')
-            if event.type == pygame.key.get_pressed():
-                if event.key == pygame.K_ESCAPE:
-                    menu.pause()
                     
         displayGame(pygame, screen, player, apple)
         #! Tim: You can handle the in-game menu HERE
