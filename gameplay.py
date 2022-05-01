@@ -116,11 +116,12 @@ def displayGame(pygame, screen, player, apple):
 #! pygame => lib
 #! screen => pygame window
 #! loadSave => String Path to a saveFile (default value '')
-def gameplay(pygame, screen, start, ingame, load):
+def gameplay(pygame, screen, start):
     clock = pygame.time.Clock()
     size = 1 #default Value
     xApple, yApple = random.randint(0, 39), random.randint(0, 39) #default Value
     state = [{'x': 19, 'y': 19, 'look': 'up'}] #default Value
+    pauseMenu = False; load = False; notDead = False
     
     bg = pygame.image.load("textures/GameBackground.jpg")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
@@ -136,36 +137,23 @@ def gameplay(pygame, screen, start, ingame, load):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
-                    ingame = True; start = False
+                    start = False
                 if event.key == pygame.K_l:
-                    load = True; ingame = True; start = False
+                    load = True; start = False
                 if event.key == pygame.K_r:
                     menu.displayRanking()
                     time.sleep(7)
                 if event.key == pygame.K_e:
                     pygame.display.quit()
                     pygame.quit()
-                    sys.exit()
-
-    #####    Call this if you want to save the game     #####
-    #saveGame(player.size, player.state, apple.x, apple.y)
-
-    #####    Call this to save the score,               #####
-    #####    the save decide if score is high enough    #####
-    #####    to save or not                             #####
-    #addNewScore(Score("Paul", player.size))
-
-    #####    Used to get the list of high scores        #####
-    #####    scores is type of Scores class             #####
-    #scores = getBestScores()    
+                    sys.exit()  
 
     # Use saved game 'file'
     if load:
         size, state, xApple, yApple = loadingGame()
     
-    pygame.display.update()
-
     while player.isAlive():
+        pygame.display.update()
         clock.tick(GAMETICK)
         screen.blit(bg, (0, 0))
         for event in pygame.event.get():
@@ -182,33 +170,35 @@ def gameplay(pygame, screen, start, ingame, load):
                     player.changeOrientation('up')
                 if event.key == pygame.K_RIGHT:
                     player.changeOrientation('right')
-            if event.type == pygame.key.get_pressed():
-                if [pygame.K_ESCAPE]:
-                    menu.displayPauseMenu(player.size)
-                    ingame = False           
+                if event.key == pygame.K_ESCAPE:
+                    pauseMenu = True
+
+        if pauseMenu == True:
+            while pauseMenu:
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_c:
+                            pauseMenu = False 
+                        # kills the snake but does not show death screen for resume and save
+                        if event.key == pygame.K_r:
+                            player.state[0]['x'] = 50
+                            notDead = True; pauseMenu = False; 
+                        if event.key == pygame.K_s:
+                            saveGame(player.size, player.state, apple.x, apple.y)
+                            player.state[0]['x'] = 50
+                            notDead = True; pauseMenu = False
+                        if event.key == pygame.K_e:
+                            pygame.display.quit()
+                            pygame.quit()
+                            sys.exit()    
+                menu.displayPauseMenu()                    
         displayGame(pygame, screen, player, apple)
+    if notDead:
+        start = True
     else:
         menu.displayGameOver(player.size)
         addNewScore(Score("Player One", player.size))
         time.sleep(7)
-        start = True; ingame = False
+        start = True
 
-    # Display the Pause Menu
-    if ingame == False:
-        for event in pygame.event.get():
-            if event.type == pygame.key.get_pressed():
-                if [pygame.K_c]:
-                    ingame = True 
-                if [pygame.K_r]:
-                    ingame = True,
-                if [pygame.K_s]:
-                    saveGame(player.size, player.state, apple.x, apple.y)
-                    pygame.display.quit()
-                    pygame.quit()
-                    sys.exit()
-                if [pygame.K_e]:
-                    pygame.display.quit()
-                    pygame.quit()
-                    sys.exit()
-
-    return player.size, ingame
+    return player.size, start
