@@ -146,7 +146,7 @@ def gameplay(pygame, screen, start):
                     pygame.quit()
                     sys.exit()  
 
-    # Use saved game 'file'
+    # Use saved game data
     if load:
         size, state, xApple, yApple = loadingGame()
     
@@ -197,9 +197,12 @@ def gameplay(pygame, screen, start):
         displayGame(pygame, screen, player, apple)
     if notDead:
         start = True
+    #End the game and set properties to default
     else:
         menu.displayGameOver(player.size)
         addNewScore(Score("Player One", player.size))
+        #Reset last game file
+        saveGame(0, [{'x': 19, 'y': 19, 'look': 'up'}], random.randint(0, 39), random.randint(0, 39))
         time.sleep(7)
         start = True
 
