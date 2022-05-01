@@ -190,6 +190,7 @@ def gameplay(pygame, screen, start):
                             player.state[0]['x'] = 50
                             notDead = True; pauseMenu = False
                         if event.key == pygame.K_e:
+                            saveGame(0, [{'x': 19, 'y': 19, 'look': 'up'}], random.randint(0, 39), random.randint(0, 39))
                             pygame.display.quit()
                             pygame.quit()
                             sys.exit()    
