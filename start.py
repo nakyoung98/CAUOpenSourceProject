@@ -16,7 +16,7 @@ speed = [2, 2]
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Snacke')
 
-start = True; ingame = False; load = False
+start = True
 
 while True:
     for event in pygame.event.get():
@@ -24,4 +24,4 @@ while True:
             pygame.display.quit()
             pygame.quit()
             sys.exit()
-    gameplay(pygame, screen, start, ingame, load)
+    gameplay(pygame, screen, start)
