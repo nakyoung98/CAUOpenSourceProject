@@ -3,7 +3,7 @@ import random
 
 from constant import HEIGHT, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
 from save import Score, addNewScore, loadingGame, saveGame
-from menu import menu
+from menu import Menu
 
 
 #! Class use to handle Apple behavior
@@ -139,6 +139,8 @@ def gameplay(pygame, screen, ingame):
     # Create Resource
     player = Player(size, state)
     apple = Apple(xApple, yApple)
+    menu = Menu(pygame, screen, player)
+
     bg = pygame.image.load("textures/GameBackground.jpg")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
 
@@ -161,7 +163,7 @@ def gameplay(pygame, screen, ingame):
                     player.changeOrientation('right')
                 if event.key == pygame.K_ESCAPE:
                     ingame = False
-                    menu.inGameMenu(pygame, screen, player)
+                    menu.start()
         displayGame(pygame, screen, player, apple)
         #! Tim: You can handle the in-game menu HERE
         #  To make a save, we need to have is variable:

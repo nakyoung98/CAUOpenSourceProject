@@ -1,13 +1,13 @@
 from constant import HEIGHT, WIDTH, BLACK, RED, GREEN
 from random import randint 
 
-class menu:
+class Menu:
     def __init__(self, pygame, screen, player):
         self.pygame = pygame
         self.screen = screen
         self.player = player
 
-    def inGameMenu(self):
+    def start(self):
         self.screen.fill(BLACK)
         
         font = self.pygame.font.SysFont('Time New Roman', 60)
