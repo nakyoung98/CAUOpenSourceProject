@@ -1,5 +1,4 @@
-from constant import HEIGHT, WIDTH, BLACK, WHITE, RED, GREEN, PURPLE
-
+from constant import HEIGHT, WIDTH, BLACK, WHITE, RED, GREEN
 from save import getBestScores
 
 class Menu:
@@ -10,7 +9,6 @@ class Menu:
 
     def displayStartMenu(self):
         self.screen.fill(BLACK)
-        #bestScore = getBestScores()
 
         #Title Text
         title = self.font.render('SNAKE', False, GREEN)
@@ -18,32 +16,54 @@ class Menu:
         titleRect.center = (WIDTH//2 , HEIGHT//8)
         self.screen.blit(title, titleRect)
         
-        #High Score Text
-        #First test with any score
-        high = self.font.render('High Score: ' + str(0), False, RED)
-        highRect = high.get_rect()
-        highRect.center = (WIDTH//2, 2*(HEIGHT//8))
-        self.screen.blit(high, highRect)
-        
+        #Play Text
+        play = self.font.render('p - PLAY', False, WHITE)
+        playRect = play.get_rect()
+        playRect.center = (WIDTH//2 , 3*(HEIGHT//8))
+        self.screen.blit(play, playRect)
+
         #Load Text
         load = self.font.render('l - LOAD', False, WHITE)
         loadRect = load.get_rect()
         loadRect.center = (WIDTH//2 , 4*(HEIGHT//8))
         self.screen.blit(load, loadRect)
 
-        #Quit Text
+        #Ranking Text
+        rank = self.font.render('r - RANKING', False, WHITE)
+        rankRect = rank.get_rect()
+        rankRect.center = (WIDTH//2 , 5*(HEIGHT//8))
+        self.screen.blit(rank, rankRect)
+
+        #Exit Text
         quit = self.font.render('e - EXIT', False, WHITE)
         quitRect = quit.get_rect()
-        quitRect.center = (WIDTH//2 , 5*(HEIGHT//8))
+        quitRect.center = (WIDTH//2 , 6*(HEIGHT//8))
         self.screen.blit(quit, quitRect)
 
-        #Play Text
-        start = self.font.render('Space - Play Game', False, PURPLE)
-        startRect = start.get_rect()
-        startRect.center = (WIDTH//2 , 6*(HEIGHT//8))
-        self.screen.blit(start, startRect)
+        self.pygame.display.update()
+
+    def displayRanking(self):
+        self.screen.fill(BLACK)
+
+        bestScores = getBestScores()
+        distance = 0
+
+        #Title Text
+        title = self.font.render('HIGH SCORES:', False, RED)
+        titleRect = title.get_rect()
+        titleRect.center = (WIDTH//2 , HEIGHT//8)
+        self.screen.blit(title, titleRect)
+
+        #All Rankings Text
+        for entry in bestScores.scores:
+            score = self.font.render(str(entry.username) + str(entry.score), False, WHITE)
+            scoreRect = score.get_rect()
+            scoreRect.center = (WIDTH//2 , 2*(HEIGHT//8) + distance)
+            self.screen.blit(score, scoreRect)
+            distance += 50
 
         self.pygame.display.update()
+
 
     def displayPauseMenu(self):
         self.screen.fill(BLACK)
@@ -86,11 +106,14 @@ class Menu:
         #GameOver Text
         gameOver = self.font.render('Your Score: ' + str(score), False, RED)
         gameOverRect = gameOver.get_rect()
-        gameOverRect.center = (WIDTH//2 , (HEIGHT//2) + 50)
+        gameOverRect.center = (WIDTH//2 , (HEIGHT//2) - 50)
         self.screen.blit(gameOver, gameOverRect)
 
         #Final Score Text
         currentScore = self.font.render('Your Score: ' + str(score), False, RED)
         scoreRect = currentScore.get_rect()
-        scoreRect.center = (WIDTH//2 , (HEIGHT//2) - 50)
+        scoreRect.center = (WIDTH//2 , (HEIGHT//2) + 50)
         self.screen.blit(currentScore, scoreRect)
+
+        self.pygame.display.update()
+
