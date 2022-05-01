@@ -12,7 +12,6 @@ from gameplay import gameplay
 pygame.init()
 
 speed = [2, 2]
-black = 0, 0, 0
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Snacke')

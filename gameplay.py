@@ -144,6 +144,8 @@ def gameplay(pygame, screen, ingame):
     bg = pygame.image.load("textures/GameBackground.jpg")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
 
+    menu.start()
+
     while player.isAlive():
         clock.tick(GAMETICK)
         screen.blit(bg, (0, 0))
@@ -161,9 +163,10 @@ def gameplay(pygame, screen, ingame):
                     player.changeOrientation('up')
                 if event.key == pygame.K_RIGHT:
                     player.changeOrientation('right')
+            if event.type == pygame.key.get_pressed():
                 if event.key == pygame.K_ESCAPE:
-                    ingame = False
-                    menu.start()
+                    menu.pause()
+                    
         displayGame(pygame, screen, player, apple)
         #! Tim: You can handle the in-game menu HERE
         #  To make a save, we need to have is variable:
@@ -172,4 +175,4 @@ def gameplay(pygame, screen, ingame):
         #    - "Apple x position": apple.x
         #    - "Apple y position": apple.y
         
-    return player.size
+    return player.size, ingame
