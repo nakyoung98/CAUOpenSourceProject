@@ -79,3 +79,18 @@ class Menu:
         self.screen.blit(quit, quitRect)
 
         self.pygame.display.update()
+
+    def displayGameOver(self, score):
+        self.screen.fill(BLACK)
+
+        #GameOver Text
+        gameOver = self.font.render('Your Score: ' + str(score), False, RED)
+        gameOverRect = gameOver.get_rect()
+        gameOverRect.center = (WIDTH//2 , (HEIGHT//2) + 50)
+        self.screen.blit(gameOver, gameOverRect)
+
+        #Final Score Text
+        currentScore = self.font.render('Your Score: ' + str(score), False, RED)
+        scoreRect = currentScore.get_rect()
+        scoreRect.center = (WIDTH//2 , (HEIGHT//2) - 50)
+        self.screen.blit(currentScore, scoreRect)
