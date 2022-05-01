@@ -1,8 +1,10 @@
 import sys
 import random
+import time
 
 from constant import HEIGHT, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
 from save import Score, addNewScore, loadingGame, saveGame
+from menu import Menu
 
 
 #! Class use to handle Apple behavior
@@ -114,34 +116,46 @@ def displayGame(pygame, screen, player, apple):
 #! pygame => lib
 #! screen => pygame window
 #! loadSave => String Path to a saveFile (default value '')
-def gameplay(pygame, screen):
+def gameplay(pygame, screen, start):
     clock = pygame.time.Clock()
     size = 1 #default Value
     xApple, yApple = random.randint(0, 39), random.randint(0, 39) #default Value
     state = [{'x': 19, 'y': 19, 'look': 'up'}] #default Value
-
-    #####    Call this if you want to load the game     #####
-    #size, state, xApple, yApple = loadingGame()
-
-    #####    Call this if you want to save the game     #####
-    #saveGame(player.size, player.state, apple.x, apple.y)
-
-    #####    Call this to save the score,               #####
-    #####    the save decide if score is high enough    #####
-    #####    to save or not                             #####
-    #addNewScore(Score("Paul", player.size))
-
-    #####    Used to get the list of high scores        #####
-    #####    scores is type of Scores class             #####
-    #scores = getBestScores()
-
-    # Create Resource
-    player = Player(size, state)
-    apple = Apple(xApple, yApple)
+    pauseMenu = False; load = False; notDead = False
+    
     bg = pygame.image.load("textures/GameBackground.jpg")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
 
+    #Create Menu
+    menu = Menu(pygame, screen)
+    
+    # Display the Start Menu
+    while start:
+        menu.displayStartMenu()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    start = False
+                if event.key == pygame.K_l:
+                    load = True; start = False
+                if event.key == pygame.K_r:
+                    menu.displayRanking()
+                    time.sleep(7)
+                if event.key == pygame.K_e:
+                    pygame.display.quit()
+                    pygame.quit()
+                    sys.exit()  
+
+    # Use saved game data
+    if load:
+        size, state, xApple, yApple = loadingGame()
+    
+    # Create Resource
+    player = Player(size, state)
+    apple = Apple(xApple, yApple)
+
     while player.isAlive():
+        pygame.display.update()
         clock.tick(GAMETICK)
         screen.blit(bg, (0, 0))
         for event in pygame.event.get():
@@ -158,12 +172,39 @@ def gameplay(pygame, screen):
                     player.changeOrientation('up')
                 if event.key == pygame.K_RIGHT:
                     player.changeOrientation('right')
+                if event.key == pygame.K_ESCAPE:
+                    pauseMenu = True
+
+        if pauseMenu == True:
+            while pauseMenu:
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_c:
+                            pauseMenu = False 
+                        # kills the snake but does not show death screen for resume and save
+                        if event.key == pygame.K_r:
+                            player.state[0]['x'] = 50
+                            notDead = True; pauseMenu = False; 
+                        if event.key == pygame.K_s:
+                            saveGame(player.size, player.state, apple.x, apple.y)
+                            player.state[0]['x'] = 50
+                            notDead = True; pauseMenu = False
+                        if event.key == pygame.K_e:
+                            saveGame(0, [{'x': 19, 'y': 19, 'look': 'up'}], random.randint(0, 39), random.randint(0, 39))
+                            pygame.display.quit()
+                            pygame.quit()
+                            sys.exit()    
+                menu.displayPauseMenu()                    
         displayGame(pygame, screen, player, apple)
-        #! Tim: You can handle the in-game menu HERE
-        #  To make a save, we need to have is variable:
-        #    - "score": player.size
-        #    - "state": player.state
-        #    - "Apple x position": apple.x
-        #    - "Apple y position": apple.y
-        # InGameMenu(????)
-    return player.size
+    if notDead:
+        start = True
+    #End the game and set properties to default
+    else:
+        menu.displayGameOver(player.size)
+        addNewScore(Score("Player One", player.size))
+        #Reset last game file
+        saveGame(0, [{'x': 19, 'y': 19, 'look': 'up'}], random.randint(0, 39), random.randint(0, 39))
+        time.sleep(7)
+        start = True
+
+    return player.size, start

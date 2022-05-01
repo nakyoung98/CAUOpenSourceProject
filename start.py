@@ -1,8 +1,3 @@
-
-
-import random
-import os
-
 import sys
 import pygame
 
@@ -12,10 +7,11 @@ from gameplay import gameplay
 pygame.init()
 
 speed = [2, 2]
-black = 0, 0, 0
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Snacke')
+
+start = True
 
 while True:
     for event in pygame.event.get():
@@ -23,4 +19,4 @@ while True:
             pygame.display.quit()
             pygame.quit()
             sys.exit()
-    gameplay(pygame, screen)
+    gameplay(pygame, screen, start)
