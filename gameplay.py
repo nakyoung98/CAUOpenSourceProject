@@ -115,7 +115,7 @@ def displayGame(pygame, screen, player, apple):
 #! pygame => lib
 #! screen => pygame window
 #! loadSave => String Path to a saveFile (default value '')
-def gameplay(pygame, screen, ingame, load):
+def gameplay(pygame, screen, start, ingame, load):
     clock = pygame.time.Clock()
     size = 1 #default Value
     xApple, yApple = random.randint(0, 39), random.randint(0, 39) #default Value
@@ -129,18 +129,18 @@ def gameplay(pygame, screen, ingame, load):
     apple = Apple(xApple, yApple)
     menu = Menu(pygame, screen)
     
-    while ingame == False:
+    # Display the Start Menu
+    while start:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_l:
-                    load = True
-                    ingame = True
-                if event.key == pygame.K_q:
+                    load = True; ingame = True; start = False
+                if event.key == pygame.K_e:
                     pygame.display.quit()
                     pygame.quit()
                     sys.exit()
                 if event.key == pygame.K_SPACE:
-                    ingame = True 
+                    ingame = True; start = False
         menu.displayStartMenu()
 
     #####    Call this if you want to load the game     #####
@@ -158,10 +158,11 @@ def gameplay(pygame, screen, ingame, load):
     #####    scores is type of Scores class             #####
     #scores = getBestScores()    
 
+    # Use saved game 'file'
     if load:
         size, state, xApple, yApple = loadingGame()
     
-    if ingame:
+    while ingame:
         pygame.display.update()
         while player.isAlive():
             clock.tick(GAMETICK)
@@ -180,16 +181,28 @@ def gameplay(pygame, screen, ingame, load):
                         player.changeOrientation('up')
                     if event.key == pygame.K_RIGHT:
                         player.changeOrientation('right')
-                # if event.type == pygame.key.get_pressed():
-                #     if event.key == pygame.K_ESCAPE:
-                #         menu.displayPauseMenu(player.size)
-                        
+                if event.type == pygame.key.get_pressed():
+                    if [pygame.K_ESCAPE]:
+                        menu.displayPauseMenu(player.size)
+                        ingame = False           
             displayGame(pygame, screen, player, apple)
-            #! Tim: You can handle the in-game menu HERE
-            #  To make a save, we need to have is variable:
-            #    - "score": player.size
-            #    - "state": player.state
-            #    - "Apple x position": apple.x
-            #    - "Apple y position": apple.y
+    
+    # Display the Pause Menu
+    if ingame == False:
+        for event in pygame.event.get():
+            if event.type == pygame.key.get_pressed():
+                if [pygame.K_c]:
+                    ingame = True 
+                if [pygame.K_r]:
+                    ingame = True,
+                if [pygame.K_s]:
+                    saveGame(player.size, player.state, apple.x, apple.y)
+                    pygame.display.quit()
+                    pygame.quit()
+                    sys.exit()
+                if [pygame.K_e]:
+                    pygame.display.quit()
+                    pygame.quit()
+                    sys.exit()
 
-    return player.size
+    return player.size, ingame

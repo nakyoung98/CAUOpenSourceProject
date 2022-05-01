@@ -26,26 +26,26 @@ class Menu:
         self.screen.blit(high, highRect)
         
         #Load Text
-        load = self.font.render('l - Load Game', False, WHITE)
+        load = self.font.render('l - LOAD', False, WHITE)
         loadRect = load.get_rect()
         loadRect.center = (WIDTH//2 , 4*(HEIGHT//8))
         self.screen.blit(load, loadRect)
 
         #Quit Text
-        quit = self.font.render('q - Quit Game', False, WHITE)
+        quit = self.font.render('e - EXIT', False, WHITE)
         quitRect = quit.get_rect()
         quitRect.center = (WIDTH//2 , 5*(HEIGHT//8))
         self.screen.blit(quit, quitRect)
 
-        #Start Text
-        start = self.font.render('Space - Start Game', False, PURPLE)
+        #Play Text
+        start = self.font.render('Space - Play Game', False, PURPLE)
         startRect = start.get_rect()
         startRect.center = (WIDTH//2 , 6*(HEIGHT//8))
         self.screen.blit(start, startRect)
 
         self.pygame.display.update()
 
-    def displayPauseMenu(self, score):
+    def displayPauseMenu(self):
         self.screen.fill(BLACK)
 
         #Pause Text
@@ -53,27 +53,27 @@ class Menu:
         pauseRect = pause.get_rect()
         pauseRect.center = (WIDTH//2 , HEIGHT//8)
         self.screen.blit(pause, pauseRect)
-        
-        #Score Text
-        currentScore = self.font.render('Your Score: ' + str(score), False, RED)
-        scoreRect = currentScore.get_rect()
-        scoreRect.center = (WIDTH//2 , 2*(HEIGHT//8))
-        self.screen.blit(currentScore, scoreRect)
 
         #Resume Text
-        resume = self.font.render('r - Resume Game', False, WHITE)
+        resume = self.font.render('c - RESUME', False, WHITE)
         resumeRect = resume.get_rect()
-        resumeRect.center = (WIDTH//2 , 4*(HEIGHT//8))
+        resumeRect.center = (WIDTH//2 , 3*(HEIGHT//8))
         self.screen.blit(resume, resumeRect)
 
+        #Restart Text
+        restart = self.font.render('r - RESTART', False, WHITE)
+        restartRect = restart.get_rect()
+        restartRect.center = (WIDTH//2 , 4*(HEIGHT//8))
+        self.screen.blit(restart, restartRect)
+
         #Save Text
-        save = self.font.render('s - Save Game', False, WHITE)
+        save = self.font.render('s - SAVE', False, WHITE)
         saveRect = save.get_rect()
         saveRect.center = (WIDTH//2 , 5*(HEIGHT//8))
         self.screen.blit(save, saveRect)
 
-        #Quit Text
-        quit = self.font.render('q - Quit Game', False, WHITE)
+        #Exit Text
+        quit = self.font.render('e - EXIT', False, WHITE)
         quitRect = quit.get_rect()
         quitRect.center = (WIDTH//2 , 6*(HEIGHT//8))
         self.screen.blit(quit, quitRect)
