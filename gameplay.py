@@ -204,7 +204,7 @@ def gameplay(pygame, screen, start):
         addNewScore(Score("Player One", player.size))
         #Reset last game file
         saveGame(0, [{'x': 19, 'y': 19, 'look': 'up'}], random.randint(0, 39), random.randint(0, 39))
-        time.sleep(7)
+        time.sleep(2)
         start = True
 
     return player.size, start
