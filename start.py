@@ -26,19 +26,4 @@ while True:
             pygame.display.quit()
             pygame.quit()
             sys.exit()
-    if start:
-        gameplay(pygame, screen, ingame, load)
-    else:
-        for event in pygame.event.get():
-            if event.type == pygame.key.get_pressed():
-                if event.key == pygame.K_l:
-                    load = True
-                    start = True
-                    ingame = True
-                if event.key == pygame.K_q:
-                    pygame.display.quit()
-                    pygame.quit()
-                    sys.exit()
-                if event.key == pygame.K_SPACE:
-                    start = True 
-                    ingame = True 
+    gameplay(pygame, screen, ingame, load)

@@ -121,16 +121,27 @@ def gameplay(pygame, screen, ingame, load):
     xApple, yApple = random.randint(0, 39), random.randint(0, 39) #default Value
     state = [{'x': 19, 'y': 19, 'look': 'up'}] #default Value
     
-    if load:
-        size, state, xApple, yApple = loadingGame()
+    bg = pygame.image.load("textures/GameBackground.jpg")
+    bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
 
     # Create Resource
     player = Player(size, state)
     apple = Apple(xApple, yApple)
     menu = Menu(pygame, screen)
     
-    bg = pygame.image.load("textures/GameBackground.jpg")
-    bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
+    while ingame == False:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_l:
+                    load = True
+                    ingame = True
+                if event.key == pygame.K_q:
+                    pygame.display.quit()
+                    pygame.quit()
+                    sys.exit()
+                if event.key == pygame.K_SPACE:
+                    ingame = True 
+        menu.displayStartMenu()
 
     #####    Call this if you want to load the game     #####
     #size, state, xApple, yApple = loadingGame()
@@ -147,11 +158,11 @@ def gameplay(pygame, screen, ingame, load):
     #####    scores is type of Scores class             #####
     #scores = getBestScores()    
 
-    if ingame == False:
-        menu.displayStartMenu()
-        start = False
+    if load:
+        size, state, xApple, yApple = loadingGame()
     
     if ingame:
+        pygame.display.update()
         while player.isAlive():
             clock.tick(GAMETICK)
             screen.blit(bg, (0, 0))
@@ -181,4 +192,4 @@ def gameplay(pygame, screen, ingame, load):
             #    - "Apple x position": apple.x
             #    - "Apple y position": apple.y
 
-    return player.size, start
+    return player.size
