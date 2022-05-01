@@ -159,7 +159,7 @@ def gameplay(pygame, screen, ingame):
                     player.changeOrientation('up')
                 if event.key == pygame.K_RIGHT:
                     player.changeOrientation('right')
-                if event.key == pygame.ESCAPE:
+                if event.key == pygame.K_ESCAPE:
                     ingame = False
                     menu.inGameMenu(pygame, screen, player)
         displayGame(pygame, screen, player, apple)

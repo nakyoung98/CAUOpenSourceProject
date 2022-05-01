@@ -25,4 +25,9 @@ while True:
             pygame.display.quit()
             pygame.quit()
             sys.exit()
-    gameplay(pygame, screen, ingame)
+    if ingame:
+        gameplay(pygame, screen, ingame)
+    else:
+        key = pygame.key.get_pressed()
+        if key[pygame.K_SPACE]:
+            ingame = True
