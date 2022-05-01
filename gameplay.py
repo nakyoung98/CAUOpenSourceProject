@@ -3,6 +3,7 @@ import random
 
 from constant import HEIGHT, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
 from save import Score, addNewScore, loadingGame, saveGame
+from menu import menu
 
 
 #! Class use to handle Apple behavior
@@ -114,7 +115,7 @@ def displayGame(pygame, screen, player, apple):
 #! pygame => lib
 #! screen => pygame window
 #! loadSave => String Path to a saveFile (default value '')
-def gameplay(pygame, screen):
+def gameplay(pygame, screen, ingame):
     clock = pygame.time.Clock()
     size = 1 #default Value
     xApple, yApple = random.randint(0, 39), random.randint(0, 39) #default Value
@@ -158,6 +159,9 @@ def gameplay(pygame, screen):
                     player.changeOrientation('up')
                 if event.key == pygame.K_RIGHT:
                     player.changeOrientation('right')
+                if event.key == pygame.ESCAPE:
+                    ingame = False
+                    menu.inGameMenu(pygame, screen, player)
         displayGame(pygame, screen, player, apple)
         #! Tim: You can handle the in-game menu HERE
         #  To make a save, we need to have is variable:
@@ -165,5 +169,5 @@ def gameplay(pygame, screen):
         #    - "state": player.state
         #    - "Apple x position": apple.x
         #    - "Apple y position": apple.y
-        # InGameMenu(????)
+        
     return player.size
