@@ -104,7 +104,7 @@ class Menu:
         self.screen.fill(BLACK)
 
         #GameOver Text
-        gameOver = self.font.render('Your Score: ' + str(score), False, RED)
+        gameOver = self.font.render('GAME OVER', False, RED)
         gameOverRect = gameOver.get_rect()
         gameOverRect.center = (WIDTH//2 , (HEIGHT//2) - 50)
         self.screen.blit(gameOver, gameOverRect)

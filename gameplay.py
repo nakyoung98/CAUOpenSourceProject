@@ -1,5 +1,6 @@
 import sys
 import random
+import time
 
 from constant import HEIGHT, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
 from save import Score, addNewScore, loadingGame, saveGame
@@ -131,20 +132,20 @@ def gameplay(pygame, screen, start, ingame, load):
     
     # Display the Start Menu
     while start:
+        menu.displayStartMenu()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    ingame = True; start = False
                 if event.key == pygame.K_l:
                     load = True; ingame = True; start = False
+                if event.key == pygame.K_r:
+                    menu.displayRanking()
+                    time.sleep(7)
                 if event.key == pygame.K_e:
                     pygame.display.quit()
                     pygame.quit()
                     sys.exit()
-                if event.key == pygame.K_SPACE:
-                    ingame = True; start = False
-        menu.displayStartMenu()
-
-    #####    Call this if you want to load the game     #####
-    #size, state, xApple, yApple = loadingGame()
 
     #####    Call this if you want to save the game     #####
     #saveGame(player.size, player.state, apple.x, apple.y)
@@ -162,31 +163,36 @@ def gameplay(pygame, screen, start, ingame, load):
     if load:
         size, state, xApple, yApple = loadingGame()
     
-    while ingame:
-        pygame.display.update()
-        while player.isAlive():
-            clock.tick(GAMETICK)
-            screen.blit(bg, (0, 0))
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.display.quit()
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        player.changeOrientation('left')
-                    if event.key == pygame.K_DOWN:
-                        player.changeOrientation('down')
-                    if event.key == pygame.K_UP:
-                        player.changeOrientation('up')
-                    if event.key == pygame.K_RIGHT:
-                        player.changeOrientation('right')
-                if event.type == pygame.key.get_pressed():
-                    if [pygame.K_ESCAPE]:
-                        menu.displayPauseMenu(player.size)
-                        ingame = False           
-            displayGame(pygame, screen, player, apple)
-    
+    pygame.display.update()
+
+    while player.isAlive():
+        clock.tick(GAMETICK)
+        screen.blit(bg, (0, 0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.display.quit()
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    player.changeOrientation('left')
+                if event.key == pygame.K_DOWN:
+                    player.changeOrientation('down')
+                if event.key == pygame.K_UP:
+                    player.changeOrientation('up')
+                if event.key == pygame.K_RIGHT:
+                    player.changeOrientation('right')
+            if event.type == pygame.key.get_pressed():
+                if [pygame.K_ESCAPE]:
+                    menu.displayPauseMenu(player.size)
+                    ingame = False           
+        displayGame(pygame, screen, player, apple)
+    else:
+        menu.displayGameOver(player.size)
+        addNewScore(Score("Player One", player.size))
+        time.sleep(7)
+        start = True; ingame = False
+
     # Display the Pause Menu
     if ingame == False:
         for event in pygame.event.get():
