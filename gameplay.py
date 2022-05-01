@@ -140,7 +140,7 @@ def gameplay(pygame, screen, start):
                     load = True; start = False
                 if event.key == pygame.K_r:
                     menu.displayRanking()
-                    time.sleep(7)
+                    time.sleep(2)
                 if event.key == pygame.K_e:
                     pygame.display.quit()
                     pygame.quit()
