@@ -126,9 +126,7 @@ def gameplay(pygame, screen, start):
     bg = pygame.image.load("textures/GameBackground.jpg")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
 
-    # Create Resource
-    player = Player(size, state)
-    apple = Apple(xApple, yApple)
+    #Create Menu
     menu = Menu(pygame, screen)
     
     # Display the Start Menu
@@ -152,6 +150,10 @@ def gameplay(pygame, screen, start):
     if load:
         size, state, xApple, yApple = loadingGame()
     
+    # Create Resource
+    player = Player(size, state)
+    apple = Apple(xApple, yApple)
+
     while player.isAlive():
         pygame.display.update()
         clock.tick(GAMETICK)
