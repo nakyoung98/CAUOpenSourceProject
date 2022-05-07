@@ -2,7 +2,7 @@ import sys
 import random
 import time
 
-from constant import HEIGHT, RestartGame, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
+from constant import HEIGHT, RestartGameSingle, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
 from save import Score, addNewScore, loadingGame, saveGame
 
 
@@ -111,17 +111,17 @@ def displayGame(pygame, screen, player, apple):
     pass
 
 
-#! GamePlay function is use to handle the snacke game
+#! singlePlay function is use to handle the snacke game
 #! pygame => lib
 #! screen => pygame window
 #! loadSave => bool for knowing if loading Save Or not
-def gameplay(pygame, screen, menu, loadSave):
+def singlePlay(pygame, screen, menu, loadSave):
     clock = pygame.time.Clock()
     size = 1  # default Value
     xApple, yApple = random.randint(
         0, 39), random.randint(0, 39)  # default Value
     state = [{'x': 19, 'y': 19, 'look': 'up'}]  # default Value
-    RestartGame = False
+    RestartGameSingle = False
 
     bg = pygame.image.load("textures/GameBackground.jpg")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
@@ -134,7 +134,7 @@ def gameplay(pygame, screen, menu, loadSave):
     player = Player(size, state)
     apple = Apple(xApple, yApple)
 
-    while player.isAlive() and not RestartGame:
+    while player.isAlive() and not RestartGameSingle:
         pygame.display.update()
         clock.tick(GAMETICK)
         screen.blit(bg, (0, 0))
@@ -153,14 +153,14 @@ def gameplay(pygame, screen, menu, loadSave):
                 if event.key == pygame.K_RIGHT:
                     player.changeOrientation('right')
                 if event.key == pygame.K_ESCAPE:
-                    RestartGame = menu.pauseMenuSoloPlayer(
+                    RestartGameSingle = menu.pauseMenuSinglePlayer(
                         pygame, player, apple, menu)
         displayGame(pygame, screen, player, apple)
 
     # End the game
-    if not RestartGame and player.state[0]['x'] != -5:
+    if not RestartGameSingle and player.state[0]['x'] != -5:
         menu.displayGameOver(player.size)
         addNewScore(Score("Solo Player", player.size))
         time.sleep(2)
 
-    return RestartGame
+    return RestartGameSingle

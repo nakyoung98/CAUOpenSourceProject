@@ -1,7 +1,7 @@
 import random
 import sys
 
-from constant import HEIGHT, WIDTH, BLACK, WHITE, RED, GREEN, RestartGame
+from constant import HEIGHT, WIDTH, BLACK, WHITE, RED, GREEN, RestartGameSingle
 from save import getBestScores, saveGame
 
 
@@ -122,7 +122,7 @@ class Menu:
 
         self.pygame.display.update()
 
-    def pauseMenuSoloPlayer(self, pygame, player, apple, menu):
+    def pauseMenuSinglePlayer(self, pygame, player, apple, menu):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:

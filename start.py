@@ -2,8 +2,8 @@ import sys
 import pygame
 import time
 
-from constant import WIDTH, HEIGHT, RestartGame
-from gameplay import gameplay
+from constant import WIDTH, HEIGHT, RestartGameSingle
+from singleplay import singlePlay
 from menu import Menu
 
 pygame.init()
@@ -19,14 +19,14 @@ start = True
 menu = Menu(pygame, screen)
 
 while True:
-    if RestartGame:
-        RestartGame = gameplay(pygame, screen, menu, False)
+    if RestartGameSingle:
+        RestartGameSingle = singlePlay(pygame, screen, menu, False)
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_p:
-                RestartGame = gameplay(pygame, screen, menu, False)
+                RestartGameSingle = singlePlay(pygame, screen, menu, False)
             if event.key == pygame.K_l:
-                RestartGame = gameplay(pygame, screen, menu, True)
+                RestartGameSingle = singlePlay(pygame, screen, menu, True)
             if event.key == pygame.K_r:
                 menu.displayRanking()
                 time.sleep(2)
