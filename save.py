@@ -2,6 +2,7 @@ import pickle
 import random
 from constant import HIGH_SCORES_LENGTH, SAVE_FILE_GAME, SAVE_FILE_SCORES
 
+
 class Game:
     def __init__(self, size, state, xApple, yApple):
         self.size = size
@@ -9,13 +10,15 @@ class Game:
         self.xApple = xApple
         self.yApple = yApple
 
+
 class Score:
     def __init__(self, username, score):
         self.username = username
         self.score = score
 
+
 class Scores:
-    def __init__(self, scores = []):
+    def __init__(self, scores=[]):
         self.scores = scores
 
     def addNewScore(self, score):
@@ -23,6 +26,7 @@ class Scores:
         self.scores.sort(key=lambda temp: temp.score, reverse=True)
         if (len(self.scores) > HIGH_SCORES_LENGTH):
             self.scores.pop(HIGH_SCORES_LENGTH - 1)
+
 
 def loadingGame():
     try:
@@ -37,11 +41,13 @@ def loadingGame():
     except EOFError:
         return 1, [{'x': 19, 'y': 19, 'look': 'up'}], random.randint(0, 39), random.randint(0, 39)
 
+
 def saveGame(size, state, xApple, yApple):
     game = Game(size, state, xApple, yApple)
     picklefile = open(SAVE_FILE_GAME, 'wb')
     pickle.dump(game, picklefile)
     picklefile.close()
+
 
 def getBestScores():
     try:
@@ -56,10 +62,12 @@ def getBestScores():
     except EOFError:
         return Scores()
 
+
 def saveBestScores(scores):
     picklefile = open(SAVE_FILE_SCORES, 'wb')
     pickle.dump(scores, picklefile)
     picklefile.close()
+
 
 def addNewScore(score):
     scores = getBestScores()
