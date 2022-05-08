@@ -2,7 +2,8 @@ import sys
 import pygame
 import time
 
-from constant import WIDTH, HEIGHT, RestartGameSingle
+from constant import WIDTH, HEIGHT, RestartGameSingle, RestartGameDual
+from dualplay import dualPlay
 from singleplay import singlePlay
 from menu import Menu
 
@@ -21,10 +22,15 @@ menu = Menu(pygame, screen)
 while True:
     if RestartGameSingle:
         RestartGameSingle = singlePlay(pygame, screen, menu, False)
+    if RestartGameDual:
+        RestartGameDual = dualPlay(pygame, screen, menu)
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_p:
                 RestartGameSingle = singlePlay(pygame, screen, menu, False)
+            ##! Time HERE, you need to add this mode to the menu
+            if event.key == pygame.K_d: ##! Dual player Mode
+                RestartGameDual = dualPlay(pygame, screen, menu)
             if event.key == pygame.K_l:
                 RestartGameSingle = singlePlay(pygame, screen, menu, True)
             if event.key == pygame.K_r:
