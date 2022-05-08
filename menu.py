@@ -141,3 +141,20 @@ class Menu:
                         pygame.quit()
                         sys.exit()
             menu.displayPauseMenu()
+
+    ##! Tim HERE need change "displayPauseMenu()"
+    def pauseMenuDualPlayer(self, pygame, menu):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_c:
+                        return False # False = Not restart game
+                    #  does not show death screen for resume and save
+                    if event.key == pygame.K_r:
+                        return True # True = Restart game
+                    if event.key == pygame.K_e:
+                        pygame.display.quit()
+                        pygame.quit()
+                        sys.exit()
+            menu.displayPauseMenu()
+
