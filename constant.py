@@ -6,6 +6,8 @@ Orientation = {'up': 0, 'down': 180, 'left': 90, 'right': 270}
 
 MODULO_SCREEN = WIDTH / 40
 
+MODULO_SCREEN_TWO_PLAYER = WIDTH / 80
+
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -19,3 +21,4 @@ SAVE_FILE_SCORES = "./savescores.txt"
 HIGH_SCORES_LENGTH = 10
 
 RestartGameSingle = False
+RestartGameDual = False
