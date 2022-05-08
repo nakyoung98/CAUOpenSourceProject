@@ -20,22 +20,28 @@ class Menu:
         titleRect.center = (WIDTH//2, 2*(HEIGHT//7))
         self.screen.blit(title, titleRect)
 
-        # Play Text
-        play = self.font.render('p - PLAY', False, WHITE)
+        # Play single Text
+        play = self.font.render('s - SINGLE PLAYER', False, WHITE)
         playRect = play.get_rect()
         playRect.center = (WIDTH//2, 3*(HEIGHT//7) + 50)
+        self.screen.blit(play, playRect)
+
+        # Play dual Text
+        play = self.font.render('d - DUAL PLAYER', False, WHITE)
+        playRect = play.get_rect()
+        playRect.center = (WIDTH//2, 3*(HEIGHT//7) + 100)
         self.screen.blit(play, playRect)
 
         # Load Text
         load = self.font.render('l - LOAD', False, WHITE)
         loadRect = load.get_rect()
-        loadRect.center = (WIDTH//2, 3*(HEIGHT//7) + 100)
+        loadRect.center = (WIDTH//2, 3*(HEIGHT//7) + 150)
         self.screen.blit(load, loadRect)
 
         # Ranking Text
         rank = self.font.render('r - RANKING', False, WHITE)
         rankRect = rank.get_rect()
-        rankRect.center = (WIDTH//2, 3*(HEIGHT//7) + 150)
+        rankRect.center = (WIDTH//2, 3*(HEIGHT//7) + 200)
         self.screen.blit(rank, rankRect)
 
         # Exit Text
@@ -104,6 +110,35 @@ class Menu:
 
         self.pygame.display.update()
 
+    def displayPauseMenuDualMode(self):
+        self.screen.fill(BLACK)
+
+        # Pause Text
+        pause = self.font.render('- Pause -', False, WHITE)
+        pauseRect = pause.get_rect()
+        pauseRect.center = (WIDTH//2, 2*(HEIGHT//7))
+        self.screen.blit(pause, pauseRect)
+
+        # Resume Text
+        resume = self.font.render('c - RESUME', False, WHITE)
+        resumeRect = resume.get_rect()
+        resumeRect.center = (WIDTH//2, 3*(HEIGHT//7) + 50)
+        self.screen.blit(resume, resumeRect)
+
+        # Restart Text
+        restart = self.font.render('r - RESTART', False, WHITE)
+        restartRect = restart.get_rect()
+        restartRect.center = (WIDTH//2, 3*(HEIGHT//7) + 100)
+        self.screen.blit(restart, restartRect)
+
+        # Exit Text
+        quit = self.font.render('e - EXIT', False, WHITE)
+        quitRect = quit.get_rect()
+        quitRect.center = (WIDTH//2, 6*(HEIGHT//7))
+        self.screen.blit(quit, quitRect)
+
+        self.pygame.display.update()
+
     def displayGameOver(self, score):
         self.screen.fill(BLACK)
 
@@ -119,6 +154,23 @@ class Menu:
         scoreRect = currentScore.get_rect()
         scoreRect.center = (WIDTH//2, (HEIGHT//2) + 25)
         self.screen.blit(currentScore, scoreRect)
+
+        self.pygame.display.update()
+
+    def displayGameOverDualMode(self, playerO, playerT):
+        self.screen.fill(BLACK)
+
+        # GameOver Text
+        gameOver = self.font.render('GAME OVER', False, RED)
+        if (playerT == False and playerO == True):
+            gameOver = self.font.render('Player 1 WIN', False, RED)
+        elif (playerT == True and playerO == False):
+            gameOver = self.font.render('Player 2 WIN', False, RED)
+        elif (playerT == False and playerO == False):
+            gameOver = self.font.render('Both Players are dead', False, RED)
+        gameOverRect = gameOver.get_rect()
+        gameOverRect.center = (WIDTH//2, (HEIGHT//2) - 25)
+        self.screen.blit(gameOver, gameOverRect)
 
         self.pygame.display.update()
 
@@ -142,7 +194,6 @@ class Menu:
                         sys.exit()
             menu.displayPauseMenu()
 
-    ##! Tim HERE need change "displayPauseMenu()"
     def pauseMenuDualPlayer(self, pygame, menu):
         while True:
             for event in pygame.event.get():
@@ -156,5 +207,5 @@ class Menu:
                         pygame.display.quit()
                         pygame.quit()
                         sys.exit()
-            menu.displayPauseMenu()
+            menu.displayPauseMenuDualMode()
 
