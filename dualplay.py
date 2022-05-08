@@ -206,13 +206,9 @@ def dualPlay(pygame, screen, menu):
                     RestartGameDual = menu.pauseMenuDualPlayer(pygame, menu)
         displayGame(pygame, screen, playerOne, playerTwo, appleOne, appleTwo)
 
-    ##! Tim HERE display game over menu if not RestartGameDual
-    ##! You can use playerOne.isAlive(playerTwo) or playerTwo.isAlive(playerOne) to know which one is alive
-    ##! To know the score, you can access to playerOne.size or playerTwo.size
     # End the game
-    # if not RestartGameDual:
-    #     menu.displayGameOver(player.size)
-    #     addNewScore(Score("Solo Player", player.size))
-    #     time.sleep(2)
+    if not RestartGameDual:
+        menu.displayGameOverDualMode(playerOne.isAlive(playerTwo), playerTwo.isAlive(playerOne))
+        time.sleep(1)
 
     return RestartGameDual

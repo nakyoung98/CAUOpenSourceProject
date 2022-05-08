@@ -26,9 +26,8 @@ while True:
         RestartGameDual = dualPlay(pygame, screen, menu)
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_p:
+            if event.key == pygame.K_s:
                 RestartGameSingle = singlePlay(pygame, screen, menu, False)
-            ##! Time HERE, you need to add this mode to the menu
             if event.key == pygame.K_d: ##! Dual player Mode
                 RestartGameDual = dualPlay(pygame, screen, menu)
             if event.key == pygame.K_l:
