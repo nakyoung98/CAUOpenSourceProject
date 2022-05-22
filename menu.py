@@ -32,16 +32,22 @@ class Menu:
         playRect.center = (WIDTH//2, 3*(HEIGHT//7) + 100)
         self.screen.blit(play, playRect)
 
+        # Play bot Text
+        play = self.font.render('b - BOT GAME', False, WHITE)
+        playRect = play.get_rect()
+        playRect.center = (WIDTH//2, 3*(HEIGHT//7) + 150)
+        self.screen.blit(play, playRect)
+
         # Load Text
         load = self.font.render('l - LOAD', False, WHITE)
         loadRect = load.get_rect()
-        loadRect.center = (WIDTH//2, 3*(HEIGHT//7) + 150)
+        loadRect.center = (WIDTH//2, 3*(HEIGHT//7) + 200)
         self.screen.blit(load, loadRect)
 
         # Ranking Text
         rank = self.font.render('r - RANKING', False, WHITE)
         rankRect = rank.get_rect()
-        rankRect.center = (WIDTH//2, 3*(HEIGHT//7) + 200)
+        rankRect.center = (WIDTH//2, 3*(HEIGHT//7) + 250)
         self.screen.blit(rank, rankRect)
 
         # Exit Text

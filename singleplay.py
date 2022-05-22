@@ -63,13 +63,14 @@ class Player:
 
     #! Change The direction of the Snacke
     def changeOrientation(self, newOrientation):
-        if (newOrientation == 'up' and self.state[0]['look'] != 'down'):
+        print('go ', newOrientation)
+        if (newOrientation == 'up' and (self.size == 1 or self.state[0]['look'] != 'down')):
             self.state[0]['look'] = 'up'
-        if (newOrientation == 'down' and self.state[0]['look'] != 'up'):
+        if (newOrientation == 'down' and (self.size == 1 or self.state[0]['look'] != 'up')):
             self.state[0]['look'] = 'down'
-        if (newOrientation == 'left' and self.state[0]['look'] != 'right'):
+        if (newOrientation == 'left' and (self.size == 1 or self.state[0]['look'] != 'right')):
             self.state[0]['look'] = 'left'
-        if (newOrientation == 'right' and self.state[0]['look'] != 'left'):
+        if (newOrientation == 'right' and (self.size == 1 or self.state[0]['look'] != 'left')):
             self.state[0]['look'] = 'right'
 
     #! Check If the Snacke Head can eat the Apple

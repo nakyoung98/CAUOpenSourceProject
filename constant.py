@@ -14,7 +14,7 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 PURPLE = (255, 0, 255)
 
-GAMETICK = 6
+GAMETICK = 60
 
 SAVE_FILE_GAME = "./savegame.txt"
 SAVE_FILE_SCORES = "./savescores.txt"
