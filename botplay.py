@@ -102,6 +102,33 @@ def botMove(bot, apple):
             tryToGoSomewhere(bot, 'left')
         return
 
+def botEasyWin(bot):
+    botX = bot.state[0]['x']
+    botY = bot.state[0]['y']
+    # print(botX, botY)
+
+    if botY == 0:
+        if botX == 0:
+            bot.changeOrientation('down')
+        else:
+            bot.changeOrientation('left')
+        return
+    
+    if botX % 2 == 0:
+        if botY == 39:
+            bot.changeOrientation('right')
+        else:
+            bot.changeOrientation('down')
+        return
+
+    if botX % 2 == 1:
+        if botY == 1 and botX != 39:
+            bot.changeOrientation('right')
+        else:
+            bot.changeOrientation('up')
+        return
+
+
 def botPlay(pygame, screen, menu):
     clock = pygame.time.Clock()
     size = 1
@@ -125,7 +152,8 @@ def botPlay(pygame, screen, menu):
                 pygame.display.quit()
                 pygame.quit()
                 sys.exit()
-        botMove(bot, apple)
+        # botMove(bot, apple)
+        botEasyWin(bot)
         displayGame(pygame, screen, bot, apple)
 
     # End the game
