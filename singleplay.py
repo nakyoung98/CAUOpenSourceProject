@@ -63,7 +63,7 @@ class Player:
 
     #! Change The direction of the Snacke
     def changeOrientation(self, newOrientation):
-        print('go ', newOrientation)
+        # print('go ', newOrientation)
         if (newOrientation == 'up' and (self.size == 1 or self.state[0]['look'] != 'down')):
             self.state[0]['look'] = 'up'
         if (newOrientation == 'down' and (self.size == 1 or self.state[0]['look'] != 'up')):

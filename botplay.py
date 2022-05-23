@@ -62,7 +62,7 @@ def botMove(bot, apple):
     botY = bot.state[0]['y']
     diffX = appleX - botX
     diffY = appleY - botY
-    print(diffX, diffY)
+    # print(diffX, diffY)
 
     if diffX == 0:
         if diffY > 0:
@@ -134,4 +134,4 @@ def botPlay(pygame, screen, menu):
         print(bot.size)
         # addNewScore(Score("Solo Player", player.size))
         time.sleep(0.5)
-        # botPlay(pygame, screen, menu)
+        botPlay(pygame, screen, menu)
