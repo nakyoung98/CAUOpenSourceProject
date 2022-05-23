@@ -22,37 +22,37 @@ def tryToGoSomewhere(bot, newDirection):
     if (newDirection == 'up' and freeUp == -1):
         if freeRight == 0:
             bot.changeOrientation('right')
-        elif freeLeft == 0:
-            bot.changeOrientation('left')
-        else:
+        elif freeDown == 0:
             bot.changeOrientation('down')
+        else:
+            bot.changeOrientation('left')
         return
 
     if (newDirection == 'right' and freeRight == -1):
         if freeDown == 0:
             bot.changeOrientation('down')
-        elif freeUp == 0:
-            bot.changeOrientation('up')
-        else:
+        elif freeLeft == 0:
             bot.changeOrientation('left')
+        else:
+            bot.changeOrientation('up')
         return
 
     if (newDirection == 'down' and freeDown == -1):
         if freeLeft == 0:
             bot.changeOrientation('left')
-        elif freeRight == 0:
-            bot.changeOrientation('right')
-        else:
-            bot.changeOrientation('up')
-        return
-
-    if (newDirection == 'left' and freeLeft == -1):
-        if freeDown == 0:
-            bot.changeOrientation('down')
         elif freeUp == 0:
             bot.changeOrientation('up')
         else:
             bot.changeOrientation('right')
+        return
+
+    if (newDirection == 'left' and freeLeft == -1):
+        if freeUp == 0:
+            bot.changeOrientation('up')
+        elif freeRight == 0:
+            bot.changeOrientation('right')
+        else:
+            bot.changeOrientation('down')
         return
 
 def botMove(bot, apple):
@@ -134,4 +134,4 @@ def botPlay(pygame, screen, menu):
         print(bot.size)
         # addNewScore(Score("Solo Player", player.size))
         time.sleep(0.5)
-        botPlay(pygame, screen, menu)
+        # botPlay(pygame, screen, menu)
