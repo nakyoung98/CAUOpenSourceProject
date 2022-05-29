@@ -1,6 +1,7 @@
 import sys
 import pygame
 import time
+from botplay import botPlay
 
 from constant import WIDTH, HEIGHT, RestartGameSingle, RestartGameDual
 from dualplay import dualPlay
@@ -35,6 +36,8 @@ while True:
             if event.key == pygame.K_r:
                 menu.displayRanking()
                 time.sleep(2)
+            if event.key == pygame.K_b:
+                RestartBot = botPlay(pygame, screen, menu)
             if event.key == pygame.K_e or event.type == pygame.QUIT:
                 pygame.display.quit()
                 pygame.quit()
