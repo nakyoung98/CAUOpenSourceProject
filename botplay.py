@@ -1,7 +1,7 @@
 import time
 import sys
 import random
-from constant import GAMETICK, HEIGHT, MODULO_SCREEN, WIDTH
+from constant import BOTGAMETICK, GAMETICK, HEIGHT, MODULO_SCREEN, WIDTH
 from singleplay import Apple, Player, displayGame
 
 def isSnakeInCase(bot, x, y):
@@ -145,7 +145,7 @@ def botPlay(pygame, screen, menu):
 
     while bot.isAlive() and not RestartBotGame:
         pygame.display.update()
-        clock.tick(GAMETICK)
+        clock.tick(BOTGAMETICK)
         screen.blit(bg, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
