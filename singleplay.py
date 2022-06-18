@@ -3,7 +3,7 @@ import sys
 import random
 import time
 
-from constant import HEIGHT, RestartGameSingle, WIDTH, GAMETICK, MODULO_SCREEN, Orientation, WHITE, FontSize
+from constant import BLACK, HEIGHT, RestartGameSingle, WIDTH, GAMETICK, MODULO_SCREEN, Orientation, WHITE, FontSize
 from save import Score, addNewScore, loadingGame, saveGame
 
 
@@ -111,6 +111,11 @@ def displayGame(pygame, screen, player, apple, font):
     screen.blit(a, (apple.x*MODULO_SCREEN, apple.y*MODULO_SCREEN))
 
             # Play bot Text
+    play = font.render(str(player.size-1), False, BLACK)
+    playRect = play.get_rect()
+    playRect.center = (WIDTH//2, HEIGHT +FontSize['score']/2)
+    screen.blit(play, playRect)
+
     play = font.render(str(player.size), False, WHITE)
     playRect = play.get_rect()
     playRect.center = (WIDTH//2, HEIGHT +FontSize['score']/2)
