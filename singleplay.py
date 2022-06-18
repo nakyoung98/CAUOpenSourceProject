@@ -130,7 +130,7 @@ def displayGame(pygame, screen, player, apple, font):
 #! screen => pygame window
 #! loadSave => bool for knowing if loading Save Or not
 def singlePlay(pygame, screen, menu, loadSave):
-    screen = pygame.display.set_mode((WIDTH, HEIGHT+FontSize['score']))
+    # screen = pygame.display.set_mode((WIDTH, HEIGHT+FontSize['score']))
 
     clock = pygame.time.Clock()
     size = 1  # default Value

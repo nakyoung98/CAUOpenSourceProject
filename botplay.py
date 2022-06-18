@@ -140,6 +140,9 @@ def botPlay(pygame, screen, menu):
     bg = pygame.image.load("textures/GameBackground.jpg")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
 
+    font = pygame.font.SysFont('Time New Roman', 60)
+
+
     bot = Player(size, state)
     apple = Apple(xApple, yApple)
 
@@ -154,7 +157,7 @@ def botPlay(pygame, screen, menu):
                 sys.exit()
         # botMove(bot, apple)
         botEasyWin(bot)
-        displayGame(pygame, screen, bot, apple)
+        displayGame(pygame, screen, bot, apple, font)
 
     # End the game
     if not RestartBotGame and bot.state[0]['x'] != -5:
