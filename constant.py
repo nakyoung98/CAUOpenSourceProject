@@ -21,5 +21,7 @@ SAVE_FILE_GAME = "./savegame.txt"
 SAVE_FILE_SCORES = "./savescores.txt"
 HIGH_SCORES_LENGTH = 10
 
+FontSize = {'score':60}
+
 RestartGameSingle = False
 RestartGameDual = False
