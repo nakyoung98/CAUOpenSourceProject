@@ -2,7 +2,7 @@ import sys
 import random
 import time
 
-from constant import HEIGHT, RestartGameSingle, WIDTH, GAMETICK, MODULO_SCREEN, Orientation
+from constant import HEIGHT, RestartGameSingle, WIDTH, GAMETICK, MODULO_SCREEN, Orientation, WHITE, FontSize
 from save import Score, addNewScore, loadingGame, saveGame
 
 
@@ -92,7 +92,7 @@ class Player:
 
 
 #! Handle All Display part (and a little more)
-def displayGame(pygame, screen, player, apple):
+def displayGame(pygame, screen, player, apple, font):
     lastX, lastY, lastLook = player.state[len(player.state) - 1]['x'], player.state[len(
         player.state) - 1]['y'], player.state[len(player.state) - 1]['look']
     player.move()
@@ -108,6 +108,13 @@ def displayGame(pygame, screen, player, apple):
     player.CheckEatApple(apple, lastX, lastY, lastLook)
     a = pygame.image.load("textures/Apple.png")
     screen.blit(a, (apple.x*MODULO_SCREEN, apple.y*MODULO_SCREEN))
+
+            # Play bot Text
+    play = font.render(str(player.size), False, WHITE)
+    playRect = play.get_rect()
+    playRect.center = (WIDTH//2, 50)
+    screen.blit(play, playRect)
+
     pygame.display.update()
     pass
 
@@ -117,6 +124,8 @@ def displayGame(pygame, screen, player, apple):
 #! screen => pygame window
 #! loadSave => bool for knowing if loading Save Or not
 def singlePlay(pygame, screen, menu, loadSave):
+    screen = pygame.display.set_mode((WIDTH, HEIGHT+FontSize['score']))
+
     clock = pygame.time.Clock()
     size = 1  # default Value
     xApple, yApple = random.randint(
@@ -126,6 +135,9 @@ def singlePlay(pygame, screen, menu, loadSave):
 
     bg = pygame.image.load("textures/GameBackground.jpg")
     bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
+
+    font = pygame.font.SysFont('Time New Roman', 60)
+
 
     # Use saved game data
     if loadSave:
@@ -156,7 +168,7 @@ def singlePlay(pygame, screen, menu, loadSave):
                 if event.key == pygame.K_ESCAPE:
                     RestartGameSingle = menu.pauseMenuSinglePlayer(
                         pygame, player, apple, menu)
-        displayGame(pygame, screen, player, apple)
+        displayGame(pygame, screen, player, apple, font)
 
     # End the game
     if not RestartGameSingle and player.state[0]['x'] != -5:
