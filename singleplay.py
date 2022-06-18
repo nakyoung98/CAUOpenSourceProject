@@ -1,3 +1,4 @@
+from msilib.schema import Font
 import sys
 import random
 import time
@@ -112,7 +113,7 @@ def displayGame(pygame, screen, player, apple, font):
             # Play bot Text
     play = font.render(str(player.size), False, WHITE)
     playRect = play.get_rect()
-    playRect.center = (WIDTH//2, 50)
+    playRect.center = (WIDTH//2, HEIGHT +FontSize['score']/2)
     screen.blit(play, playRect)
 
     pygame.display.update()
